@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AVR Solutions - Transform Your Nonprofit's Fundraising</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <style>
+        :root {
+            --primary-dark: #0f172a;
+            --primary-medium: #1e293b;
+            --primary-light: #334155;
+            --accent: #d4a574;
+            --accent-dark: #b8935e;
+            --text-light: #64748b;
+            --bg-light: #f8fafc;
+            --white: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            color: var(--primary-dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+            background: var(--white);
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(212, 165, 116, 0.1);
+        }
+
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--white);
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-dark);
+            font-size: 20px;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(180deg, var(--primary-dark) 0%, var(--primary-medium) 100%);
+            position: relative;
+            overflow: hidden;
+            padding-top: 80px;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 30% 20%, rgba(212, 165, 116, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 70% 80%, rgba(212, 165, 116, 0.08) 0%, transparent 50%);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+            color: var(--white);
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(212, 165, 116, 0.15);
+            border: 1px solid rgba(212, 165, 116, 0.3);
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--accent);
+            margin-bottom: 32px;
+        }
+
+        .hero h1 {
+            font-size: clamp(42px, 6vw, 72px);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 24px;
+            letter-spacing: -1px;
+        }
+
+        .hero h1 .highlight {
+            background: linear-gradient(135deg, var(--accent), #f4d4a0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: clamp(18px, 2.5vw, 22px);
+            color: rgba(255, 255, 255, 0.85);
+            line-height: 1.7;
+            margin-bottom: 40px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+            color: var(--primary-dark);
+            padding: 16px 40px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 16px rgba(212, 165, 116, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(212, 165, 116, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--white);
+            padding: 16px 40px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Section Styles */
+        section {
+            padding: 100px 0;
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 80px;
+        }
+
+        .section-label {
+            display: inline-block;
+            color: var(--accent);
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+
+        .section-title {
+            font-size: clamp(36px, 5vw, 52px);
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            color: var(--primary-dark);
+            letter-spacing: -0.5px;
+        }
+
+        .section-subtitle {
+            font-size: 18px;
+            color: var(--text-light);
+            line-height: 1.7;
+        }
+
+        /* Problems Section */
+        .problems-section {
+            background: var(--bg-light);
+        }
+
+        .problems-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 32px;
+        }
+
+        .problem-card {
+            background: var(--white);
+            padding: 40px;
+            border-radius: 16px;
+            border: 1px solid #e2e8f0;
+            transition: all 0.4s ease;
+            position: relative;
+        }
+
+        .problem-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            border-color: var(--accent);
+        }
+
+        .problem-icon-wrapper {
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, #f1f5f9, #e2e8f0);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+            color: var(--accent);
+            font-size: 28px;
+            transition: all 0.4s ease;
+        }
+
+        .problem-card:hover .problem-icon-wrapper {
+            background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+            color: var(--white);
+            transform: scale(1.1);
+        }
+
+        .problem-card h3 {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--primary-dark);
+        }
+
+        .problem-card p {
+            font-size: 16px;
+            color: var(--text-light);
+            line-height: 1.7;
+        }
+
+        /* Solutions Section */
+        .solutions-section {
+            background: var(--primary-dark);
+            color: var(--white);
+        }
+
+        .solutions-section .section-title {
+            color: var(--white);
+        }
+
+        .solutions-section .section-subtitle {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .solutions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 32px;
+        }
+
+        .solution-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(212, 165, 116, 0.2);
+            padding: 40px;
+            border-radius: 16px;
+            backdrop-filter: blur(10px);
+            transition: all 0.4s ease;
+        }
+
+        .solution-card:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateY(-8px);
+            border-color: var(--accent);
+        }
+
+        .solution-icon {
+            width: 72px;
+            height: 72px;
+            background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+            color: var(--primary-dark);
+            font-size: 32px;
+            box-shadow: 0 8px 24px rgba(212, 165, 116, 0.3);
+        }
+
+        .solution-card h3 {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--white);
+        }
+
+        .solution-card p {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.7;
+        }
+
+        /* Methodology Section */
+        .methodology-section {
+            background: var(--white);
+        }
+
+        .methodology-box {
+            background: linear-gradient(135deg, var(--primary-medium), var(--primary-dark));
+            padding: 60px;
+            border-radius: 24px;
+            text-align: center;
+            color: var(--white);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .methodology-box::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(212, 165, 116, 0.1) 0%, transparent 70%);
+        }
+
+        .methodology-box-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .methodology-box h3 {
+            font-size: 36px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            color: var(--accent);
+        }
+
+        .methodology-box p {
+            font-size: 18px;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 40px;
+        }
+
+        .methodology-badges {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            background: var(--white);
+            color: var(--primary-dark);
+            padding: 12px 28px;
+            border-radius: 8px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 15px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .badge i {
+            color: var(--accent);
+        }
+
+        /* Results Section */
+        .results-section {
+            background: var(--bg-light);
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 32px;
+        }
+
+        .result-card {
+            background: var(--white);
+            padding: 48px 40px;
+            border-radius: 16px;
+            text-align: center;
+            border: 1px solid #e2e8f0;
+            transition: all 0.4s ease;
+        }
+
+        .result-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            border-color: var(--accent);
+        }
+
+        .result-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #f1f5f9, #e2e8f0);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px;
+            color: var(--accent);
+            font-size: 36px;
+            transition: all 0.4s ease;
+        }
+
+        .result-card:hover .result-icon {
+            background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+            color: var(--white);
+            transform: scale(1.1);
+        }
+
+        .result-card h3 {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--primary-dark);
+        }
+
+        .result-card p {
+            font-size: 16px;
+            color: var(--text-light);
+            line-height: 1.7;
+        }
+
+        /* Quote Section */
+        .quote-section {
+            background: var(--primary-dark);
+            color: var(--white);
+            text-align: center;
+            padding: 80px 0;
+        }
+
+        .quote-box {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 50px;
+            background: rgba(212, 165, 116, 0.1);
+            border-left: 4px solid var(--accent);
+            border-radius: 16px;
+        }
+
+        .quote-box blockquote {
+            font-size: 20px;
+            font-style: italic;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            color: rgba(255, 255, 255, 0.95);
+        }
+
+        .quote-box cite {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--accent);
+            font-style: normal;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, var(--primary-medium), var(--primary-dark));
+            color: var(--white);
+            text-align: center;
+            padding: 120px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at center, rgba(212, 165, 116, 0.15) 0%, transparent 70%);
+        }
+
+        .cta-content {
+            position: relative;
+            z-index: 2;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .cta-section h2 {
+            font-size: clamp(36px, 5vw, 52px);
+            font-weight: 800;
+            margin-bottom: 24px;
+            line-height: 1.2;
+        }
+
+        .cta-section p {
+            font-size: 20px;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 40px;
+            line-height: 1.7;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary-dark);
+            color: var(--white);
+            padding: 60px 0 40px;
+            text-align: center;
+            border-top: 1px solid rgba(212, 165, 116, 0.2);
+        }
+
+        .footer-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .footer-logo {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--accent);
+            letter-spacing: 2px;
+        }
+
+        .footer-tagline {
+            font-size: 18px;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 8px;
+        }
+
+        .footer-description {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.6);
+            margin-top: 32px;
+        }
+
+        /* Animations */
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            section {
+                padding: 60px 0;
+            }
+
+            .hero {
+                min-height: 90vh;
+                padding-top: 100px;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+            }
+
+            .btn-primary,
+            .btn-secondary {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .problems-grid,
+            .solutions-grid,
+            .results-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .methodology-box {
+                padding: 40px 24px;
+            }
+
+            .methodology-badges {
+                flex-direction: column;
+            }
+
+            .section-header {
+                margin-bottom: 50px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <span>AVR SOLUTIONS</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-badge fade-in-up">
+                    <i class="fas fa-star"></i>
+                    <span>Transform Your Nonprofit's Future</span>
+                </div>
+                <h1 class="fade-in-up">Is Your Nonprofit Struggling to <span class="highlight">Generate Sustainable Funding?</span></h1>
+                <p class="fade-in-up">Most faith-based nonprofits and ministries have a powerful mission—but lack the strategic fundraising systems and organizational clarity needed to achieve financial sustainability and long-term growth.</p>
+                <div class="hero-buttons fade-in-up">
+                    <a href="#contact" class="btn-primary">
+                        <span>Schedule Free Consultation</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                    <a href="#solutions" class="btn-secondary">
+                        <span>Learn More</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Problems Section -->
+    <section class="problems-section" id="problems">
+        <div class="container">
+            <div class="section-header fade-in-up">
+                <div class="section-label">THE CHALLENGE</div>
+                <h2 class="section-title">The Fundraising Challenges Holding You Back</h2>
+                <p class="section-subtitle">These common obstacles prevent nonprofits from reaching their full potential and impact.</p>
+            </div>
+
+            <div class="problems-grid">
+                <div class="problem-card fade-in-up">
+                    <div class="problem-icon-wrapper">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Inconsistent Revenue Streams</h3>
+                    <p>Your organization experiences feast or famine cycles, making it impossible to plan strategically or invest in growth. Month-to-month survival becomes the norm.</p>
+                </div>
+
+                <div class="problem-card fade-in-up">
+                    <div class="problem-icon-wrapper">
+                        <i class="fas fa-users-slash"></i>
+                    </div>
+                    <h3>Donor Fatigue & Retention Issues</h3>
+                    <p>Your donor base isn't growing, and existing supporters are giving less. You're constantly chasing new donors instead of building lasting relationships.</p>
+                </div>
+
+                <div class="problem-card fade-in-up">
+                    <div class="problem-icon-wrapper">
+                        <i class="fas fa-compass"></i>
+                    </div>
+                    <h3>Lack of Strategic Direction</h3>
+                    <p>Without clear organizational goals and fundraising roadmaps, your team operates reactively—putting out fires instead of building toward a compelling vision.</p>
+                </div>
+
+                <div class="problem-card fade-in-up">
+                    <div class="problem-icon-wrapper">
+                        <i class="fas fa-user-tie"></i>
+                    </div>
+                    <h3>Limited Board Engagement</h3>
+                    <p>Your board members want to help but don't know how. They're not equipped to fundraise, govern effectively, or provide strategic guidance.</p>
+                </div>
+
+                <div class="problem-card fade-in-up">
+                    <div class="problem-icon-wrapper">
+                        <i class="fas fa-fire-alt"></i>
+                    </div>
+                    <h3>Leadership Burnout</h3>
+                    <p>You're wearing too many hats—running programs, managing staff, AND trying to fundraise. There's no time to work ON the organization, only IN it.</p>
+                </div>
+
+                <div class="problem-card fade-in-up">
+                    <div class="problem-icon-wrapper">
+                        <i class="fas fa-globe"></i>
+                    </div>
+                    <h3>Poor Digital Presence</h3>
+                    <p>Your website and communications don't effectively tell your story or inspire action. Potential donors can't easily understand your impact or how to give.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quote Section -->
+    <section class="quote-section">
+        <div class="container">
+            <div class="quote-box fade-in-up">
+                <blockquote>"And let us consider how we may spur one another on toward love and good deeds, not giving up meeting together, as some are in the habit of doing, but encouraging one another."</blockquote>
+                <cite>— Hebrews 10:24-25</cite>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solutions Section -->
+    <section class="solutions-section" id="solutions">
+        <div class="container">
+            <div class="section-header fade-in-up">
+                <div class="section-label">THE SOLUTION</div>
+                <h2 class="section-title">Value-Led Growth Through Disciplined Consultation</h2>
+                <p class="section-subtitle">At AVR Solutions, we help Christian leaders and faith-based organizations build strong, sustainable fundraising systems through our proven methodology that combines strategic planning, board development, leadership coaching, and digital strategy.</p>
+            </div>
+
+            <div class="solutions-grid">
+                <div class="solution-card fade-in-up">
+                    <div class="solution-icon">
+                        <i class="fas fa-clipboard-list"></i>
+                    </div>
+                    <h3>Strategic Planning</h3>
+                    <p>Develop clear organizational roadmaps with measurable goals that align your mission with sustainable funding strategies.</p>
+                </div>
+
+                <div class="solution-card fade-in-up">
+                    <div class="solution-icon">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <h3>Board Development</h3>
+                    <p>Transform your board into engaged fundraising champions who actively contribute to organizational growth and governance.</p>
+                </div>
+
+                <div class="solution-card fade-in-up">
+                    <div class="solution-icon">
+                        <i class="fas fa-user-graduate"></i>
+                    </div>
+                    <h3>Leadership Coaching</h3>
+                    <p>Receive personalized spiritual executive coaching to lead with clarity, confidence, and Christ-centered principles.</p>
+                </div>
+
+                <div class="solution-card fade-in-up">
+                    <div class="solution-icon">
+                        <i class="fas fa-laptop-code"></i>
+                    </div>
+                    <h3>Digital Strategy</h3>
+                    <p>Build compelling brand identity and communication systems that effectively share your story and inspire donor engagement.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Methodology Section -->
+    <section class="methodology-section">
+        <div class="container">
+            <div class="section-header fade-in-up">
+                <div class="section-label">OUR APPROACH</div>
+                <h2 class="section-title">Our Proven Methodology</h2>
+            </div>
+
+            <div class="methodology-box fade-in-up">
+                <div class="methodology-box-content">
+                    <h3>Backed by Industry-Leading Frameworks</h3>
+                    <p>We combine Wicked Problem Solving methodology with Project Management Institute best practices to deliver measurable results for your organization.</p>
+                    
+                    <div class="methodology-badges">
+                        <div class="badge">
+                            <i class="fas fa-tools"></i>
+                            <span>Wicked Problem Solving</span>
+                        </div>
+                        <div class="badge">
+                            <i class="fas fa-certificate"></i>
+                            <span>PMI Certified</span>
+                        </div>
+                        <div class="badge">
+                            <i class="fas fa-cross"></i>
+                            <span>Faith-Based Approach</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <p style="text-align: center; font-size: 20px; max-width: 800px; margin: 50px auto 0; font-style: italic; color: var(--primary-dark); font-weight: 500; line-height: 1.7;" class="fade-in-up">
+                "Ultimately, our work is grounded in stewardship, accountability, and clarity — values that guide both our faith and our practice."
+            </p>
+        </div>
+    </section>
+
+    <!-- Results Section -->
+    <section class="results-section">
+        <div class="container">
+            <div class="section-header fade-in-up">
+                <div class="section-label">YOUR RESULTS</div>
+                <h2 class="section-title">What You'll Walk Away With</h2>
+            </div>
+
+            <div class="results-grid">
+                <div class="result-card fade-in-up">
+                    <div class="result-icon">
+                        <i class="fas fa-bullseye"></i>
+                    </div>
+                    <h3>Clear Strategic Direction</h3>
+                    <p>A comprehensive organizational roadmap with defined goals, milestones, and actionable next steps.</p>
+                </div>
+
+                <div class="result-card fade-in-up">
+                    <div class="result-icon">
+                        <i class="fas fa-dollar-sign"></i>
+                    </div>
+                    <h3>Sustainable Funding Model</h3>
+                    <p>Diversified revenue streams and donor cultivation strategies that create financial stability.</p>
+                </div>
+
+                <div class="result-card fade-in-up">
+                    <div class="result-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Engaged Board Members</h3>
+                    <p>A motivated, equipped board that actively participates in fundraising and strategic governance.</p>
+                </div>
+
+                <div class="result-card fade-in-up">
+                    <div class="result-icon">
+                        <i class="fas fa-chart-bar"></i>
+                    </div>
+                    <h3>Increased Donor Retention</h3>
+                    <p>Systems for building lasting donor relationships and increasing lifetime giving value.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quote Section 2 -->
+    <section class="quote-section">
+        <div class="container">
+            <div class="quote-box fade-in-up">
+                <blockquote>"Commit thy works unto the LORD, and thy thoughts shall be established."</blockquote>
+                <cite>— Proverbs 16:3 KJV</cite>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section" id="contact">
+        <div class="container">
+            <div class="cta-content fade-in-up">
+                <h2>Ready to Transform Your Nonprofit's Future?</h2>
+                <p>Schedule a free capacity conversation to explore the next steps for your organization's growth and sustainability.</p>
+                <a href="#contact" class="btn-primary">
+                    <span>Schedule Your Free Consultation</span>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content fade-in-up">
+                <div class="footer-logo">AVR SOLUTIONS</div>
+                <div class="footer-tagline">Always Valued Restoration</div>
+                <div class="footer-description">Bringing order, stewardship, and execution to your mission</div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Hero animations
+        gsap.timeline()
+            .from('.hero-badge', { opacity: 0, y: 20, duration: 0.8, ease: 'power3.out' })
+            .from('h1', { opacity: 0, y: 30, duration: 0.8, ease: 'power3.out' }, '-=0.4')
+            .from('.hero p', { opacity: 0, y: 30, duration: 0.8, ease: 'power3.out' }, '-=0.4')
+            .from('.hero-buttons', { opacity: 0, y: 30, duration: 0.8, ease: 'power3.out' }, '-=0.4');
+
+        // Scroll animations for all sections
+        gsap.utils.toArray('.fade-in-up').forEach((element, index) => {
+            gsap.from(element, {
+                scrollTrigger: {
+                    trigger: element,
+                    start: 'top 85%',
+                    toggleActions: 'play none none none'
+                },
+                opacity: 0,
+                y: 50,
+                duration: 0.8,
+                ease: 'power3.out',
+                delay: index * 0.05
+            });
+        });
+
+        // Navbar background on scroll
+        ScrollTrigger.create({
+            start: 'top -80',
+            end: 99999,
+            toggleClass: { className: 'scrolled', targets: 'nav' }
+        });
+    </script>
+</body>
+</html>
